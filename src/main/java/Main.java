@@ -17,9 +17,17 @@ public class Main
 
     public static final int ROCK = 0;
     public static final int PATH = 1;
-    
-    
 
+    public static final int UP = 8;
+    public static final int RIGHT = 6;
+    public static final int DOWN = 2;
+    public static final int LEFT = 4;
+
+    public static char marker = 'a';
+
+
+    public static int posX = MAXIMUM_X/2;
+    public static int posY = MAXIMUM_Y/2;
 
     public static void main(String[] args)
     {
@@ -33,8 +41,17 @@ public class Main
     {
         int[][] maze = initializeMaze();
 
-        drillPathTest(maze);
+        int direction = randomDirection();
+        System.out.println( direction );
 
+
+        drillPath(maze, LEFT);
+        drillPath(maze, UP);
+        drillPath(maze, UP);
+
+        drillPath(maze, RIGHT);
+        drillPath(maze, DOWN);
+        drillPath(maze, DOWN);
 
         return maze;    
     }
@@ -77,11 +94,13 @@ public class Main
             {
                 if( maze[x][y] == ROCK )
                 {
-                    System.out.print( " X |" );
+//                    System.out.print( " X |" );
+                    System.out.print( "   |" );
                 }
                 else
                 {
-                    System.out.print( "   |" );
+//                    System.out.print( "   |" );
+                    System.out.printf( " %c |", (char)(maze[x][y]) );
                 }
             }
             System.out.println();
@@ -95,19 +114,69 @@ public class Main
      *
      * @param maze Das Labyrinth in welches der Pfad eingefügt werden soll
      */
-    public static void drillPathTest(int[][] maze )
+    public static void drillPath(int[][] maze, int direction)
     {
-        int startX = MAXIMUM_X/2;
-        int startY = MAXIMUM_Y/2;
+        int xv = 0;
+        int yv = 0;
 
+        switch(direction) {
+            case UP:
+            {
+                yv = -1;
+                break;
+            }
 
+            case DOWN:
+            {
+                yv = 1;
+                break;
+            }
 
-        for( int i = 0; i < 4; i++ )
-        {
-            maze[startX++][startY] = PATH;
+            case LEFT:
+            {
+                xv = -1;
+                break;
+            }
+
+            case RIGHT:
+            {
+                xv = 1;
+                break;
+            }
+
+            default:
+            {
+                throw new RuntimeException("Das hätte nicht passieren dürfen");
+            }
         }
+
+
+        for( int i = 0; i < 2; i++ ){
+            maze[posX][posY] = marker;
+            marker++;
+            posX += xv;
+            posY += yv;
+        }
+
     }
-    
+
+
+    /**
+     * Gibt eine zufällige Zahl zurück, die eine Richtung darstellt
+     *
+     * @return Zahl die eine Richtung darstellt
+     */
+    public static int randomDirection()
+    {
+        return  switch((int)(Math.random()*4))
+                {
+                    case 0 -> UP;
+                    case 1 -> RIGHT;
+                    case 2 -> DOWN;
+                    case 3 -> LEFT;
+                    default -> -1;
+                };
+    }
 
 
 
