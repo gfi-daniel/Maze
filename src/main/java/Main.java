@@ -12,8 +12,8 @@
 
 public class Main
 {
-    public static final int MAXIMUM_X = 12;
-    public static final int MAXIMUM_Y = 12;
+    public static final int MAXIMUM_X = 17;
+    public static final int MAXIMUM_Y = 13;
 
     public static final int ROCK = 0;
     public static final int PATH = 1;
@@ -33,11 +33,17 @@ public class Main
     {
         int[][] maze = initializeMaze();
 
+        drillPathTest(maze);
 
 
         return maze;    
     }
 
+    /**
+     * Erzeugt ein zweidimensionales int-Array mit vordefinierten Werten für Felsen und gibt dieses zurück
+     *
+     * @return zweidimensionales int-Array ohne Gänge
+     */
     public static int[][] initializeMaze()
     {
         int[][] maze = new int[MAXIMUM_X][MAXIMUM_Y];
@@ -47,14 +53,18 @@ public class Main
         {
             for(int x = 0; x < MAXIMUM_X; x++ )
             {
-                // maze[x][y] = ROCK;
-                maze[x][y] = count ++;
+                 maze[x][y] = ROCK;
             }
         }
 
         return maze;
     }
 
+    /**
+     * Druckt das angegebene Labyrinth in der Konsole aus
+     *
+     * @param maze Das Labyrinth welches ausgedruckt werden soll
+     */
     public static void printMaze( int[][] maze )
     {
         System.out.println( " ---".repeat(MAXIMUM_X) );
@@ -65,20 +75,40 @@ public class Main
 
             for( int x = 0; x < MAXIMUM_X; x++ )
             {
-                System.out.printf( "%5d", maze[x][y] );
-//                if( maze[x][y] == ROCK )
-//                {
-//                    System.out.print( " X |" );
-//                }
-//                else
-//                {
-//                    System.out.print( "   |" );
-//                }
+                if( maze[x][y] == ROCK )
+                {
+                    System.out.print( " X |" );
+                }
+                else
+                {
+                    System.out.print( "   |" );
+                }
             }
             System.out.println();
             System.out.println( " ---".repeat(MAXIMUM_X) );
         }
     }
+
+
+    /**
+     * Erzeugt ausgehend vom Zentrum einen Pfad der vier Einheiten lang ist
+     *
+     * @param maze Das Labyrinth in welches der Pfad eingefügt werden soll
+     */
+    public static void drillPathTest(int[][] maze )
+    {
+        int startX = MAXIMUM_X/2;
+        int startY = MAXIMUM_Y/2;
+
+
+
+        for( int i = 0; i < 4; i++ )
+        {
+            maze[startX++][startY] = PATH;
+        }
+    }
     
-    
+
+
+
 }
