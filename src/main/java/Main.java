@@ -10,6 +10,8 @@
  */
 
 
+import java.util.ArrayList;
+
 public class Main
 {
     public static final int MAXIMUM_X = 17;
@@ -25,13 +27,24 @@ public class Main
 
     public static char marker = 'a';
 
-
     public static int posX;
     public static int posY;
+
+    public static ArrayList<Coordinate> coordinates;
+
 
     public static void main(String[] args)
     {
         int[][] maze = generateMaze();
+
+        for( int i = 0; i < coordinates.size(); i++ )
+        {
+            Coordinate coordinate = coordinates.get(i);
+            int x = coordinate.getX();
+            int y = coordinate.getY();
+
+            System.out.printf( "(%2d/%2d)\n", x, y );
+        }
 
         printMaze( maze );
     }
@@ -41,26 +54,47 @@ public class Main
     public static int[][] generateMaze()
     {
         int[][] maze = initializeMaze();
+        coordinates = new ArrayList<>();
 
-        for( int i = 0; i < 40; i++ )
+        for(int i = 0; i < 40 * 3; i++)
         {
-            if (!attemptOneStep(maze)) {
-//                posx =
-//                        posY =
+            if(!attemptOneStep(maze))
+            {
+                if(coordinates.size() <= 0)
+                {
+                    break;
+                }
+
+                Coordinate coordinate = coordinates.get(0);
+                coordinates.remove(0);
+
+                posX = coordinate.getX();
+                posY = coordinate.getY();
             }
         }
 
         return maze;    
     }
 
+
+    /**
+     * Versucht den Pfad um zwei Kästchen in eine zufällige Richtung zu erweitern.
+     *
+     * @param maze Das Labyrinth welches erweitert werden soll
+     * @return true wenn der Vorgang erfolgreich war, ansonsten false
+     */
     private static boolean attemptOneStep(int[][] maze)
     {
-        for( int i = 0; i < 10; i++ )
+        int maxTries = 10;
+        while( maxTries-- > 0 )
         {
             int direction = randomDirection();
 
             if(drillPath(maze, direction))
             {
+                Coordinate newCoordinate = new Coordinate( posX, posY );
+                coordinates.add(newCoordinate);
+
                 System.out.print(direction + " ");
                 return true;
             }
@@ -75,7 +109,7 @@ public class Main
     }
 
     /**
-     * Erzeugt ein zweidimensionales int-Array mit vordefinierten Werten für Felsen und gibt dieses zurück
+     * Gibt ein neues zweidimensionales int-Array mit vordefinierten Werten für Felsen und Pfade zurück.
      *
      * @return zweidimensionales int-Array ohne Gänge
      */
@@ -106,9 +140,9 @@ public class Main
         }
 
 
-        posX = MAXIMUM_X / 2;
-        posY = MAXIMUM_Y / 2;
-        maze[posX][posY] = PATH;
+        posX = -1;
+        posY = 5;
+//        maze[posX][posY] = PATH;
 
         return maze;
     }
@@ -147,7 +181,8 @@ public class Main
 
 
     /**
-     * Versucht von der aktuellen Stelle im Labyrinth einen zwei Kästchen langen weg, in die angegebene Richtung zu graben.
+     * Versucht von der aktuellen Stelle im Labyrinth einen zwei Kästchen langen weg, in die angegebene Richtung zu
+     * graben.
      *
      * @param maze Das Labyrinth in dem gegraben werden soll
      * @param direction Die Richtung in die versucht wird zu graben
@@ -194,7 +229,6 @@ public class Main
             return false;
         }
 
-
         for(int i = 0; i < 2; i++)
         {
             posX += xv;
@@ -212,11 +246,30 @@ public class Main
 
     }
 
+
+    /**
+     * Überprüft, ob in einem Labyrinth um zwei Kästchen in die angegebene Richtung gebohrt werden kann, ohne auf einen
+     * Pfad zu treffen.
+     *
+     * @param maze Das Labyrinth für das die Überprüfung durchgeführt werden soll
+     * @param xv x-Wert des Richtungsvektors
+     * @param yv y-Wert des Richtungsvektors
+     * @return true wenn gebohrt werden kann, ansonsten false
+     */
     private static boolean drillAble(int[][] maze, int xv, int yv)
     {
         int testX = posX + 2*xv;
         int testY = posY + 2*yv;
 
+        if( testX < 0 || testX >= MAXIMUM_X )
+        {
+            return false;
+        }
+
+        if( testY < 0 || testY >= MAXIMUM_Y )
+        {
+            return false;
+        }
 
         return (maze[testX][testY] == ROCK);
     }
