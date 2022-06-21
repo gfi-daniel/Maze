@@ -26,8 +26,8 @@ public class Main
     public static char marker = 'a';
 
 
-    public static int posX = MAXIMUM_X/2;
-    public static int posY = MAXIMUM_Y/2;
+    public static int posX;
+    public static int posY;
 
     public static void main(String[] args)
     {
@@ -73,6 +73,10 @@ public class Main
                  maze[x][y] = ROCK;
             }
         }
+
+        posX = MAXIMUM_X / 2;
+        posY = MAXIMUM_Y / 2;
+        maze[posX][posY] = PATH;
 
         return maze;
     }
@@ -160,16 +164,24 @@ public class Main
 
         for(int i = 0; i < 2; i++)
         {
-            maze[posX][posY] = marker;
-            marker++;
             posX += xv;
             posY += yv;
+            maze[posX][posY] = marker;
+            marker++;
         }
 
         return true;
 
     }
 
+    private static boolean drillAble(int[][] maze, int xv, int yv)
+    {
+        int testX = posX + 2*xv;
+        int testY = posY + 2*yv;
+
+
+        return (maze[testX][testY] == ROCK);
+    }
 
 
     /**
