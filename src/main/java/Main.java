@@ -48,9 +48,13 @@ public class Main
 
         printMaze( maze );
     }
-    
-    
-    
+
+
+    /**
+     * Generiert ein automatisch ein zufälliges Labyrinth und gibt dieses als ein zweidimensionales int-Array zurück.
+     *
+     * @return Ein automatisch generiertes Labyrinth
+     */
     public static int[][] generateMaze()
     {
         int[][] maze = initializeMaze();
@@ -108,6 +112,7 @@ public class Main
         return false;
     }
 
+
     /**
      * Gibt ein neues zweidimensionales int-Array mit vordefinierten Werten für Felsen und Pfade zurück.
      *
@@ -146,6 +151,7 @@ public class Main
 
         return maze;
     }
+
 
     /**
      * Druckt das angegebene Labyrinth in der Konsole aus
@@ -291,7 +297,5 @@ public class Main
                     default -> -1;
                 };
     }
-
-
 
 }
