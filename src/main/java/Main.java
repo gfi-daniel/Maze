@@ -110,11 +110,13 @@ public class Main
 
 
     /**
-     * Erzeugt ausgehend vom Zentrum einen Pfad der vier Einheiten lang ist
+     * Versucht von der aktuellen Stelle im Labyrinth einen zwei Kästchen langen weg, in die angegebene Richtung zu graben.
      *
-     * @param maze Das Labyrinth in welches der Pfad eingefügt werden soll
+     * @param maze Das Labyrinth in dem gegraben werden soll
+     * @param direction Die Richtung in die versucht wird zu graben
+     * @return true wenn erfolgreich in die angegebene Richtung gegraben werden konnte, andernfalls false
      */
-    public static void drillPath(int[][] maze, int direction)
+    public static boolean drillPath(int[][] maze, int direction)
     {
         int xv = 0;
         int yv = 0;
@@ -150,15 +152,24 @@ public class Main
             }
         }
 
+        if(!drillAble( maze, xv, yv ))
+        {
+            return false;
+        }
 
-        for( int i = 0; i < 2; i++ ){
+
+        for(int i = 0; i < 2; i++)
+        {
             maze[posX][posY] = marker;
             marker++;
             posX += xv;
             posY += yv;
         }
 
+        return true;
+
     }
+
 
 
     /**
