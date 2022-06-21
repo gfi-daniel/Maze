@@ -32,6 +32,7 @@ public class Main
     public static void main(String[] args)
     {
         int[][] maze = generateMaze();
+
         printMaze( maze );
     }
     
@@ -41,19 +42,36 @@ public class Main
     {
         int[][] maze = initializeMaze();
 
-        int direction = randomDirection();
-        System.out.println( direction );
-
-
-        drillPath(maze, LEFT);
-        drillPath(maze, UP);
-        drillPath(maze, UP);
-
-        drillPath(maze, RIGHT);
-        drillPath(maze, DOWN);
-        drillPath(maze, DOWN);
+        for( int i = 0; i < 40; i++ )
+        {
+            if (!attemptOneStep(maze)) {
+//                posx =
+//                        posY =
+            }
+        }
 
         return maze;    
+    }
+
+    private static boolean attemptOneStep(int[][] maze)
+    {
+        for( int i = 0; i < 10; i++ )
+        {
+            int direction = randomDirection();
+
+            if(drillPath(maze, direction))
+            {
+                System.out.print(direction + " ");
+                return true;
+            }
+            else
+            {
+                System.out.print( "(" + direction + ") " );
+            }
+        }
+
+        System.out.println( "Abbruch" );
+        return false;
     }
 
     /**
@@ -66,6 +84,7 @@ public class Main
         int[][] maze = new int[MAXIMUM_X][MAXIMUM_Y];
         int count = 0;
 
+
         for(int y = 0; y < MAXIMUM_Y; y++ )
         {
             for(int x = 0; x < MAXIMUM_X; x++ )
@@ -73,6 +92,19 @@ public class Main
                  maze[x][y] = ROCK;
             }
         }
+
+        for( int x = 0; x < MAXIMUM_X; x++ )
+        {
+            maze[x][0] = PATH;
+            maze[x][MAXIMUM_Y-1] = PATH;
+        }
+
+        for( int y = 0; y < MAXIMUM_Y; y++ )
+        {
+            maze[0][y] =PATH;
+            maze[MAXIMUM_X-1][y] =PATH;
+        }
+
 
         posX = MAXIMUM_X / 2;
         posY = MAXIMUM_Y / 2;
@@ -88,6 +120,7 @@ public class Main
      */
     public static void printMaze( int[][] maze )
     {
+        System.out.println();
         System.out.println( " ---".repeat(MAXIMUM_X) );
 
         for( int y = 0; y < MAXIMUM_Y; y++ )
@@ -167,7 +200,12 @@ public class Main
             posX += xv;
             posY += yv;
             maze[posX][posY] = marker;
+
             marker++;
+            if( marker > 'z' )
+            {
+                marker = 'a';
+            }
         }
 
         return true;
