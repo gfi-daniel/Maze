@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class MazeGenerator
 {
-    private static final int MAXIMUM_X = 17;
-    private static final int MAXIMUM_Y = 13;
+    private static final int MAXIMUM_X = (17*2)|1;
+    private static final int MAXIMUM_Y = (13*2)|1;
 
     public static final int ROCK = 0;
     public static final int PATH = 1;
@@ -20,6 +20,10 @@ public class MazeGenerator
 
     private static int posX;
     private static int posY;
+
+    private static int entrancePosX;
+    private static int entrancePosY;
+
 
     private static ArrayList<Coordinate> coordinates;
 
@@ -38,7 +42,7 @@ public class MazeGenerator
         int[][] maze = initializeMaze();
         coordinates = new ArrayList<>();
 
-        for(int i = 0; i < 40 * 3; i++)
+        for(int i = 0; i < 40 * 3 * 20; i++)
         {
             if(!attemptOneStep(maze))
             {
@@ -55,7 +59,44 @@ public class MazeGenerator
             }
         }
 
+        fixBorder(maze);
+
         return maze;
+    }
+
+
+    /**
+     * Setzt die äußeren vier Seitenränder des Labyrinths auf den Block des angegebenen Typs (z. B. ROCK oder PATH)
+     *
+     * @param maze Das Labyrinth in dem die Seitenränder geändert werden sollen
+     * @param type
+     */
+    private void setBorder( int[][] maze, int type )
+    {
+        for( int x = 0; x < MAXIMUM_X; x++ )
+        {
+            maze[x][0] = type;
+            maze[x][MAXIMUM_Y-1] = type;
+        }
+
+        for( int y = 0; y < MAXIMUM_Y; y++ )
+        {
+            maze[0][y] = type;
+            maze[MAXIMUM_X-1][y] = type;
+        }
+    }
+
+
+    /**
+     * Ersetzt, außer am Eingang, alle äußeren Pfadblöcke des Labyrinths durch Felsenblöcke.
+     *
+     * @param maze
+     */
+    private void fixBorder(int[][] maze)
+    {
+        setBorder(maze, ROCK);
+
+        maze[entrancePosX][entrancePosY] = PATH;
     }
 
 
@@ -110,21 +151,14 @@ public class MazeGenerator
             }
         }
 
-        for( int x = 0; x < MAXIMUM_X; x++ )
-        {
-            maze[x][0] = PATH;
-            maze[x][MAXIMUM_Y-1] = PATH;
-        }
-
-        for( int y = 0; y < MAXIMUM_Y; y++ )
-        {
-            maze[0][y] =PATH;
-            maze[MAXIMUM_X-1][y] =PATH;
-        }
+        setBorder( maze, PATH );
 
 
         posX = -1;
         posY = 5;
+
+        entrancePosX = posX + 1;
+        entrancePosY = posY;
 //        maze[posX][posY] = PATH;
 
         return maze;
@@ -275,5 +309,7 @@ public class MazeGenerator
                     default -> -1;
                 };
     }
+
+
 
 }
