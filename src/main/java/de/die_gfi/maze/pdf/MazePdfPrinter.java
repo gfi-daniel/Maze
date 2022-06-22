@@ -12,17 +12,18 @@ import java.io.FileNotFoundException;
 
 public class MazePdfPrinter
 {
-    public static void main(String[] args) throws FileNotFoundException
+    public MazePdfPrinter()
     {
-
-        printMaze(null);
-
 
     }
 
-
-
-    public static void printMaze( int[][] maze ) throws FileNotFoundException
+    /**
+     *
+     *
+     * @param maze
+     * @throws FileNotFoundException
+     */
+    public void printMaze( int[][] maze ) throws FileNotFoundException
     {
        //  String zielDatei = "./src/main/resources/de/die_gfi/maze/generated/maze.pdf";
         String zielDatei = "src/main/resources/maze.pdf";
@@ -38,11 +39,24 @@ public class MazePdfPrinter
         document.add(headLine);
 
 
-//        addMaze(document, maze);
+        addMaze(document, maze);
 
         document.close();
+    }
+
+
+    /**
+     * Fügt ein Labyrinth dem PDF-Dokument hinzu
+     *
+     * @param document Das Dokument in welches das Labyrinth hinzugefügt werden soll
+     * @param maze Das
+     */
+    private void addMaze( Document document, int[][] maze )
+    {
 
     }
+
+
 
 
     /**
@@ -53,7 +67,7 @@ public class MazePdfPrinter
      * @param text     Der Text den die Überschrift enthalten soll
      * @return Paragraph-Objekt welches als Überschrift dient
      */
-    private static Paragraph generateHeadLine(String text, int fontSize) {
+    private Paragraph generateHeadLine(String text, int fontSize) {
         Paragraph headLine = new Paragraph(text);
         headLine.setFontSize(fontSize);
         headLine.setBold();
