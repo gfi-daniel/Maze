@@ -41,10 +41,16 @@ public class MazeGenerator
     {
         int[][] maze = initializeMaze();
         coordinates = new ArrayList<>();
+        int pathLength = 0;
+
 
         for(int i = 0; i < 40 * 3 * 20; i++)
         {
-            if(!attemptOneStep(maze))
+            if(attemptTwoSteps(maze) && pathLength <= 6)
+            {
+                pathLength += 2;
+            }
+            else
             {
                 if(coordinates.size() <= 0)
                 {
@@ -56,6 +62,8 @@ public class MazeGenerator
 
                 posX = coordinate.getX();
                 posY = coordinate.getY();
+
+                pathLength = 0;
             }
         }
 
@@ -106,14 +114,14 @@ public class MazeGenerator
      * @param maze Das Labyrinth welches erweitert werden soll
      * @return true wenn der Vorgang erfolgreich war, ansonsten false
      */
-    private boolean attemptOneStep(int[][] maze)
+    private boolean attemptTwoSteps(int[][] maze)
     {
         int maxTries = 10;
         while( maxTries-- > 0 )
         {
             int direction = randomDirection();
 
-            if(drillPath(maze, direction))
+            if(drillTwoSteps(maze, direction))
             {
                 Coordinate newCoordinate = new Coordinate( posX, posY );
                 coordinates.add(newCoordinate);
@@ -206,7 +214,7 @@ public class MazeGenerator
      * @param direction Die Richtung in die versucht wird zu graben
      * @return true wenn erfolgreich in die angegebene Richtung gegraben werden konnte, andernfalls false
      */
-    private boolean drillPath(int[][] maze, int direction)
+    private boolean drillTwoSteps(int[][] maze, int direction)
     {
         int xv = 0;
         int yv = 0;
@@ -258,6 +266,8 @@ public class MazeGenerator
             {
                 marker = 'a';
             }
+
+
         }
 
         return true;
