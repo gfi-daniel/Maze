@@ -8,8 +8,8 @@ public class MazeGenerator
     private static final int MAXIMUM_X = 17;
     private static final int MAXIMUM_Y = 13;
 
-    private static final int ROCK = 0;
-    private static final int PATH = 1;
+    public static final int ROCK = 0;
+    public static final int PATH = 1;
 
     private static final int UP = 8;
     private static final int RIGHT = 6;

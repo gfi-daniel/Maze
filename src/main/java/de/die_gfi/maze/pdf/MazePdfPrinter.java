@@ -1,17 +1,25 @@
 package de.die_gfi.maze.pdf;
 
 
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import de.die_gfi.maze.MazeGenerator;
 
 import java.io.FileNotFoundException;
 
 
+
 public class MazePdfPrinter
 {
+    private final float SIDE_LENGTH = 10;
+
+
     public MazePdfPrinter()
     {
 
@@ -53,7 +61,46 @@ public class MazePdfPrinter
      */
     private void addMaze( Document document, int[][] maze )
     {
+        int maximumX = maze.length;
+        int maximumY = maze[0].length;
 
+        System.out.printf( "maximumX = %d\n", maximumX );
+        System.out.printf( "maximumY = %d\n", maximumY );
+
+
+        float[] spaltenBreiten = new float[maximumX];
+
+        for( int i = 0; i < maximumX; i++ )
+        {
+            spaltenBreiten[i] = SIDE_LENGTH;
+        }
+
+        Table table = new Table(spaltenBreiten);
+
+
+        for( int y = 0; y < maximumY; y++ )
+        {
+            for( int x = 0; x < maximumX; x++ )
+            {
+                int block = maze[x][y];
+                Cell cell = new Cell();
+
+                String text = "" + (char)block;
+                Paragraph paragraph = new Paragraph(text);
+                cell.add(paragraph);
+
+                if( block == MazeGenerator.ROCK )
+                {
+                    cell.setBackgroundColor(ColorConstants.BLACK/*LIGHT_GRAY*/);
+                }
+
+                table.addCell(cell);
+            }
+
+        }
+
+
+        document.add(table);
     }
 
 
@@ -67,7 +114,8 @@ public class MazePdfPrinter
      * @param text     Der Text den die Überschrift enthalten soll
      * @return Paragraph-Objekt welches als Überschrift dient
      */
-    private Paragraph generateHeadLine(String text, int fontSize) {
+    private Paragraph generateHeadLine(String text, int fontSize)
+    {
         Paragraph headLine = new Paragraph(text);
         headLine.setFontSize(fontSize);
         headLine.setBold();
