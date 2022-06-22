@@ -1,3 +1,5 @@
+package de.die_gfi.maze;
+
 public class Coordinate
 {
     private int x;

@@ -1,4 +1,4 @@
-/*
+package de.die_gfi.maze;/*
  * 1. Erstellen Sie ein zweidimensionales Array, in dem die Gänge gegraben werden
  * 2. Füllen Sie das Array mit einem Symbol, welches einen Felsen darstellt
  * 3. Legen Sie für den Bagger Koordinaten x und y an, der in der Mitte startet
@@ -9,6 +9,8 @@
  *
  */
 
+
+import de.die_gfi.maze.Coordinate;
 
 import java.util.ArrayList;
 
