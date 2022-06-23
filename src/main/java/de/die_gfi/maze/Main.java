@@ -8,13 +8,25 @@ public class Main
 {
     public static void main(String[] args) throws FileNotFoundException
     {
+        generateManyMazes(3);
+    }
+
+    private static void generateManyMazes(int amount) throws FileNotFoundException
+    {
         MazeGenerator mazeGenerator = new MazeGenerator();
-        int[][] maze = mazeGenerator.generateMaze();
-
-        mazeGenerator.printMaze(maze);
-
-
+        int[][] maze;
         MazePdfPrinter mazePdfPrinter = new MazePdfPrinter();
-        mazePdfPrinter.printMaze(maze);
+
+
+        for(int i = 1; i <= amount; i++ )
+        {
+            String fileName = String.format( "maze%08d.pdf", i );
+            System.out.print( "Generiere " + fileName + " ..." );
+
+            maze = mazeGenerator.generateMaze();
+            mazePdfPrinter.printMaze(maze, fileName);
+
+            System.out.print( "OK\n" );
+        }
     }
 }
