@@ -1,6 +1,9 @@
 package de.die_gfi.maze;
 
 
+import de.die_gfi.maze.util.Coordinate;
+import de.die_gfi.maze.util.Vector;
+
 import java.util.ArrayList;
 
 public class MazeGenerator

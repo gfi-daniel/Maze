@@ -1,4 +1,4 @@
-package de.die_gfi.maze;
+package de.die_gfi.maze.util;
 
 public class Coordinate
 {
