@@ -1,6 +1,7 @@
 package de.die_gfi.maze;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -14,14 +15,22 @@ public class App extends Application
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception
+    public void start(Stage stage) throws Exception
     {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("configuration.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
 
-        Label l = new Label("something");
-        VBox vbox = new VBox(l);
-        Scene scene = new Scene(vbox);
-        primaryStage.setScene(scene);
+        stage.setTitle( "Labyrinth Generator" );
+        stage.setScene(scene);
+        stage.show();
 
-        primaryStage.show();
+
+
+//        Label l = new Label("something");
+//        VBox vbox = new VBox(l);
+//        Scene scene = new Scene(vbox);
+//        primaryStage.setScene(scene);
+//
+//        primaryStage.show();
     }
 }
