@@ -20,6 +20,8 @@ public class MazePdfPrinter
     private final float SIDE_LENGTH = 10f;
     private final float FONT_SIZE = 7f;
 
+    private final boolean PRINT_LETTERS = false;
+
 
     public MazePdfPrinter()
     {
@@ -86,10 +88,13 @@ public class MazePdfPrinter
                 int block = maze[x][y];
                 Cell cell = new Cell();
 
-                String text = "" + (char)block;
-                Paragraph paragraph = new Paragraph(text);
-                paragraph.setFontSize(FONT_SIZE);
-                cell.add(paragraph);
+                if(PRINT_LETTERS)
+                {
+                    String text = "" + (char)block;
+                    Paragraph paragraph = new Paragraph(text);
+                    paragraph.setFontSize(FONT_SIZE);
+                    cell.add(paragraph);
+                }
 
                 if( block == MazeGenerator.ROCK )
                 {
