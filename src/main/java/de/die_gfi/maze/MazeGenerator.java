@@ -77,7 +77,7 @@ public class MazeGenerator
      * Setzt die äußeren vier Seitenränder des Labyrinths auf den Block des angegebenen Typs (z. B. ROCK oder PATH)
      *
      * @param maze Das Labyrinth in dem die Seitenränder geändert werden sollen
-     * @param type
+     * @param type Der Typ (ROCK oder PATH) den die Seitenränder haben sollen
      */
     private void setBorder( int[][] maze, int type )
     {
@@ -98,7 +98,7 @@ public class MazeGenerator
     /**
      * Ersetzt, außer am Eingang, alle äußeren Pfadblöcke des Labyrinths durch Felsenblöcke.
      *
-     * @param maze
+     * @param maze Das Labyrinth in dem die Änderung durchgeführt werden soll
      */
     private void fixBorder(int[][] maze)
     {
@@ -112,7 +112,7 @@ public class MazeGenerator
      * Versucht den Pfad um zwei Kästchen in eine zufällige Richtung zu erweitern.
      *
      * @param maze Das Labyrinth welches erweitert werden soll
-     * @return true wenn der Vorgang erfolgreich war, ansonsten false
+     * @return true, wenn der Vorgang erfolgreich war, ansonsten false
      */
     private boolean attemptTwoSteps(int[][] maze)
     {
@@ -148,7 +148,6 @@ public class MazeGenerator
     private int[][] initializeMaze()
     {
         int[][] maze = new int[MAXIMUM_X][MAXIMUM_Y];
-        int count = 0;
 
 
         for(int y = 0; y < MAXIMUM_Y; y++ )
@@ -212,7 +211,7 @@ public class MazeGenerator
      *
      * @param maze Das Labyrinth in dem gegraben werden soll
      * @param direction Die Richtung in die versucht wird zu graben
-     * @return true wenn erfolgreich in die angegebene Richtung gegraben werden konnte, andernfalls false
+     * @return true, wenn erfolgreich in die angegebene Richtung gegraben werden konnte, andernfalls false
      */
     private boolean drillTwoSteps(int[][] maze, int direction)
     {

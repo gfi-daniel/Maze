@@ -26,9 +26,9 @@ public class MazePdfPrinter
     }
 
     /**
+     * Druckt das angegebene Labyrinth in eine PDF-Datei
      *
-     *
-     * @param maze
+     * @param maze Das Labyrinth welches in eine PDF-Datei gedruckt werden soll
      * @throws FileNotFoundException
      */
     public void printMaze( int[][] maze ) throws FileNotFoundException
@@ -57,7 +57,7 @@ public class MazePdfPrinter
      * Fügt ein Labyrinth dem PDF-Dokument hinzu
      *
      * @param document Das Dokument in welches das Labyrinth hinzugefügt werden soll
-     * @param maze Das
+     * @param maze Das Labyrinth welches hinzugefügt werden soll
      */
     private void addMaze( Document document, int[][] maze )
     {
@@ -112,7 +112,7 @@ public class MazePdfPrinter
      *
      * @param fontSize Die Schriftgröße, die der Absatz haben soll
      * @param text     Der Text den die Überschrift enthalten soll
-     * @return Paragraph-Objekt welches als Überschrift dient
+     * @return Paragraf-Objekt welches als Überschrift dient
      */
     private Paragraph generateHeadLine(String text, int fontSize)
     {
