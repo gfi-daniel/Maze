@@ -17,7 +17,8 @@ import java.io.FileNotFoundException;
 
 public class MazePdfPrinter
 {
-    private final float SIDE_LENGTH = 10;
+    private final float SIDE_LENGTH = 10f;
+    private final float FONT_SIZE = 7f;
 
 
     public MazePdfPrinter()
@@ -87,6 +88,7 @@ public class MazePdfPrinter
 
                 String text = "" + (char)block;
                 Paragraph paragraph = new Paragraph(text);
+                paragraph.setFontSize(FONT_SIZE);
                 cell.add(paragraph);
 
                 if( block == MazeGenerator.ROCK )
@@ -94,6 +96,9 @@ public class MazePdfPrinter
                     cell.setBackgroundColor(ColorConstants.BLACK/*LIGHT_GRAY*/);
                 }
 
+
+                cell.setWidth(SIDE_LENGTH);
+                cell.setHeight(SIDE_LENGTH);
                 table.addCell(cell);
             }
 
