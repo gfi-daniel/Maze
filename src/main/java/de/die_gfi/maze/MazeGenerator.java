@@ -17,6 +17,7 @@ public class MazeGenerator
     private static final int DOWN = 2;
     private static final int LEFT = 4;
 
+
     private static char marker = 'a';
 
     private static int posX;
@@ -216,31 +217,56 @@ public class MazeGenerator
      */
     private boolean drillTwoSteps(int[][] maze, int direction)
     {
-        int xv = 0;
-        int yv = 0;
+        Vector vector = generateVector(direction);
+
+        if(!drillAble( maze, vector.x, vector.y ))
+        {
+            return false;
+        }
+
+        for(int i = 0; i < 2; i++)
+        {
+            posX += vector.x;
+            posY += vector.y;
+            maze[posX][posY] = marker;
+
+            marker++;
+            if( marker > 'z' )
+            {
+                marker = 'a';
+            }
+        }
+
+        return true;
+    }
+
+    private Vector generateVector(int direction)
+    {
+        int vectorX = 0;
+        int vectroY = 0;
 
         switch(direction) {
             case UP:
             {
-                yv = -1;
+                vectroY = -1;
                 break;
             }
 
             case DOWN:
             {
-                yv = 1;
+                vectroY = 1;
                 break;
             }
 
             case LEFT:
             {
-                xv = -1;
+                vectorX = -1;
                 break;
             }
 
             case RIGHT:
             {
-                xv = 1;
+                vectorX = 1;
                 break;
             }
 
@@ -250,28 +276,7 @@ public class MazeGenerator
             }
         }
 
-        if(!drillAble( maze, xv, yv ))
-        {
-            return false;
-        }
-
-        for(int i = 0; i < 2; i++)
-        {
-            posX += xv;
-            posY += yv;
-            maze[posX][posY] = marker;
-
-            marker++;
-            if( marker > 'z' )
-            {
-                marker = 'a';
-            }
-
-
-        }
-
-        return true;
-
+        return new Vector(vectorX, vectroY);
     }
 
 
