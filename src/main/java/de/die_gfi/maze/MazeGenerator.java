@@ -7,6 +7,7 @@ public class MazeGenerator
 {
     private static final int MAXIMUM_X = (17*2)|1;
     private static final int MAXIMUM_Y = (13*2)|1;
+    public static final int MAX_PATH_LENGTH = 6;
 
     public static final int ROCK = 0;
     public static final int PATH = 1;
@@ -46,7 +47,7 @@ public class MazeGenerator
 
         for(int i = 0; i < 40 * 3 * 20; i++)
         {
-            if(attemptTwoSteps(maze) && pathLength <= 6)
+            if(attemptTwoSteps(maze) && pathLength <= MAX_PATH_LENGTH)
             {
                 pathLength += 2;
             }
